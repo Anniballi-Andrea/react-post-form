@@ -13,6 +13,10 @@ function App() {
   }
 
   const [formData, setFormData] = useState(initialFormData)
+  const [message, setMessage] = useState({
+    text: null,
+    type: ''
+  })
 
   function handleSubmit(e) {
     e.preventDefault()
@@ -26,9 +30,13 @@ function App() {
       .then(response => {
         console.log(response)
         setFormData(initialFormData)
+        setMessage({ text: 'success', type: 'success' })
+
       })
       .catch(err => {
-        console.log(err.message)
+
+        setFormData(initialFormData)
+        setMessage({ text: err.message, type: 'danger' })
       })
 
   }
@@ -43,6 +51,7 @@ function App() {
           <div className="col-sm-12">
             <div className="card">
               <form className=" pt-3 px-3" onSubmit={handleSubmit}>
+                {message && <p className={`text-${message.type}`}> {message.text}</p>}
                 <div>
                   <input
                     type="text " className=" info mt-2" placeholder="Insert your name"
@@ -78,7 +87,7 @@ function App() {
             </div>
           </div>
         </div>
-      </div>
+      </div >
     </>
   )
 }
