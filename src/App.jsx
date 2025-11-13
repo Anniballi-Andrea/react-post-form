@@ -1,19 +1,36 @@
 import { useState } from "react"
+import axios from "axios"
+const endpoint = 'https://67c5b4f3351c081993fb1ab6.mockapi.io/api/posts'
 
 
 function App() {
 
-
-  const [formData, setFormData] = useState({
+  const initialFormData = {
     author: '',
     title: '',
     body: '',
     public: false
-  })
+  }
+
+  const [formData, setFormData] = useState(initialFormData)
 
   function handleSubmit(e) {
     e.preventDefault()
     console.log(formData)
+
+    axios.post(endpoint, { formData }, {
+      headers: {
+        'contente-Type': 'aplication/json'
+      }
+    })
+      .then(response => {
+        console.log(response)
+        setFormData(initialFormData)
+      })
+      .catch(err => {
+        console.log(err.message)
+      })
+
   }
 
 
